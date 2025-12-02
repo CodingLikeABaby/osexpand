@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+    <div class="sidebar" id="sidebar">
+      
+        <button onclick="toggleClipBoard()">
+            <img class="side-icon" src="imgs/board-icon.png" alt="presse papier">
+        </button>
+
+        <button onclick="toggleEncoder()">
+            <img class="side-icon" src="imgs/encode-icon.png" alt="encoder/decoder">
+        </button>
+
+        <button onclick="toggleWeb()">
+            <img class="side-icon" src="imgs/web-icon.png" alt="web">
+        </button>
+
+        <button onclick="toggleTime()">
+            <img class="side-icon" src="imgs/time-icon.png" alt="web">
+        </button>
+
+        <button onclick="toggleCalc()">
+            <img class="side-icon" src="imgs/calc-icon.png" alt="web">
+        </button>
+      
+        
+    </div>
+    
+    <script>
+    const { ipcRenderer } = require('electron');
+
+    function toggleClipBoard(){
+      ipcRenderer.send('open-clipboard');
+    }
+
+    function toggleEncoder(){
+      ipcRenderer.send('open-encoder');
+    }
+
+    function toggleWeb(){
+      ipcRenderer.send('open-web');
+    }
+
+    function toggleTime(){
+      ipcRenderer.send('open-time');
+    }
+
+    function toggleCalc(){
+      ipcRenderer.send('open-calc');
+    }
+    </script>
+
+
+</body>
+</html>

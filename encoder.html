@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+
+        body{
+            background-color: #1e1e1e;
+            display: flex; 
+            flex-direction: row; 
+            padding: 0; 
+            margin: 0; 
+            gap: 5px;
+        }
+
+        .boutcode{
+            width: 150px;
+            height: 35px;
+        }
+        
+        .enc{
+            background-color: #e4a23f;
+        }
+
+        .dec{
+            background-color: #9595e8;
+        }
+
+        button{
+            cursor: pointer;
+            border: none;
+            border-radius: 0.5vw;
+            font-size: medium;
+            color: white;
+        }
+
+        #boutcopy{
+            width: 70px;
+            height: 100%;
+            background-color: rgb(150, 215, 166);
+        }
+
+
+        input{
+            width: 295px;
+            border: none;
+            outline: none;
+            border-radius: 0.5vw;
+            padding: 5px;
+            font-size: medium;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; gap: 5px;">
+
+        <div style="width: 100%;">
+            <input type="text" id="texte" placeholder="Text...">
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+
+            <div style="display: flex; flex-direction: row; gap: 5px;">
+                <button class="boutcode enc" onclick="base64Encode()">Base64 Encode</button>
+                <button class="boutcode dec" onclick="base64Decode()">Base64 Decode</button>
+            </div style="display: flex; flex-direction: row; gap: 5px;">
+            <div>
+                <button class="boutcode enc" onclick="urlEncode()">Url Encode</button>
+                <button class="boutcode dec" onclick="urlDecode()">Url Decode</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div>
+        <button id="boutcopy" onclick="copyText()">Copy</button>
+    </div>
+
+
+    <script>
+        const {ipcRenderer} = require('electron');
+        const input = document.getElementById('texte');
+
+        ipcRenderer.on('load-encoder', (event, data) => {
+            input.value = data;
+        });
+
+
+        function save(){
+            ipcRenderer.send('save-encoder', input.value);
+        }
+
+
+        input.addEventListener('input', save);
+
+        
+        function base64Encode(){
+            let input = document.getElementById('texte');
+            let encoded = btoa(unescape(encodeURIComponent(input.value)));
+            input.value = encoded;
+            save();
+        }
+
+        function base64Decode(){
+            let input = document.getElementById('texte');
+            let encoded = decodeURIComponent(escape(atob(input.value)));
+            input.value = encoded;
+            save();
+        }
+
+        function urlEncode(){
+            let input = document.getElementById('texte');
+            let encoded = encodeURIComponent(input.value);
+            input.value = encoded;
+            save();
+        }
+
+        function urlDecode(){
+            let input = document.getElementById('texte');
+            let encoded = decodeURIComponent(input.value);
+            input.value = encoded;
+            save();
+        }
+
+
+        function copyText() {
+            // Get the text field
+            let copyText = document.getElementById("texte");
+            // Select the text field
+            copyText.select();
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText.value);
+            // Deselect text
+            copyText.blur();
+        }
+    </script>
+</body>
+</html>

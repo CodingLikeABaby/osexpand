@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <style>
+
+
+    .full-div{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5vw;
+        background-color: rgb(50, 50, 50);
+        padding-top: 2vw;
+        padding-bottom: 2vw;
+        border-radius: 1vw;
+    }
+
+    input{
+        width: 93%;
+        padding: 1vw;
+        font-size: medium;
+        border: none;
+        outline: none;
+        border-radius: 0.2vw;
+    }
+
+    .bottom-div{
+        width: 95%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    button{
+        width: 49%;
+        padding: 1vw;
+        font-size: medium;
+        border: none;
+        background-color: rgb(213, 229, 142);
+        border-radius: 0.2vw;
+    }
+
+    button:hover{
+        cursor: pointer;
+        background-color: rgb(186, 200, 122);
+    }
+
+   </style>
+</head>
+<body>
+    <div class="full-div">
+        <input type="text" id="mytime">
+        <div class="bottom-div">
+            <button onclick="toDate()">Convert to date</button>
+            <button onclick="toTimestamp()">Convert to timetamp</button>
+        </div>
+    </div>
+
+    <script>
+        const {ipcRenderer} = require('electron');
+        let input = document.getElementById('mytime');
+
+        ipcRenderer.on('load-time', (event, data) => {
+            input.value = data;
+        });
+
+        function save(){
+            ipcRenderer.send('save-time', input.value);
+        }
+
+        input.addEventListener('input', save);
+
+    
+        function toTimestamp(){
+            let input = document.getElementById('mytime');
+            const date = new Date(input.value);
+            const timestamp = date.getTime();
+            input.value = timestamp;
+            save();
+        }
+
+        function toDate(){
+            let input = document.getElementById('mytime');
+            const date = new Date(Number(input.value));
+            input.value = date.toString();
+            save()
+        }
+
+    </script>
+</body>
+</html>

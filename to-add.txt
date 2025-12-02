@@ -1,0 +1,28 @@
+un encodeur :
+
+on a un input, on y entre un texte. on a 4 options, base64 encode, url encode, base64 decode, url decode. À chaque opétation, le programme prend comme entrée le texte dans l'input, l'encode/decode et le recolle à la place de l'ancien. ainsi, pas besoin de copier coller constants, on colle le texte de base puis on encode simplement ou doublement et décode à la chaine. peut être html encode/decode aussi.
+
+Le local storage se met à jour à chaque modification.
+Mais vas savoir pourquoi, l'encodage/décodage n'est pas considéré comme une modification.
+
+
+
+
+Fenêtre mini-browser / webview :
+
+on a un input pour entrer l'url et le js change dynamiquement la source de l'iframe. une fenêtre web assez petite apparaît. on peut peut être même la rendre ajustable en therme de taille. ça servirait pour checker un site web rapidement, une vidéo ou autre.
+
+
+
+
+Linktree personalisable pour que n'importe qui puisse le personaliser hyper vite.
+
+ex :  J'ai une liste d'urls que j'aimerais mettre dans le Linktree
+Dans le répertoire du projet, il y a un fichier texte urlstree.txt (un truc du genre)
+Je vais ajouter à la ligne chacun de mes urls dans ce fichier.
+Dans la page linktree.html (ou un truc du genre), il y a une boucle js qui loop sur chaque url pour le mettre en href d'un lien
+Ces liens sont cliquables et s'ouvrent dans le browser
+Niveau affichage, grid affiche les boutons 3 par ligne (par ex)
+
+En gros, on vas simplement placer nos liens dans ce fichier texte et une loop js les utilisent pour afficher un lien à chaque fois. (on peut scroller dans la fenêtre, du coup, on peut en mettre autant qu'on veut)
+
